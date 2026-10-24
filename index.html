@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f8ff">
+  <meta name="description" content="芙芙PCL下载补丁：帮助恢复 PCL 启动器下载与整合包安装相关功能。">
+  <title>芙芙PCL下载补丁</title>
+  <link rel="icon" href="icon.ico">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #10284b;
+      --muted: #5d718e;
+      --blue: #2463eb;
+      --blue-dark: #1748ad;
+      --sky: #dbeaff;
+      --line: #d8e5f5;
+      --paper: #f4f8ff;
+      --white: #fff;
+      --font: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .shell { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+
+    .topbar {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(183, 205, 235, .56);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 750; }
+    .brand img { width: 36px; height: 36px; image-rendering: pixelated; }
+    .brand span { font-size: 15px; }
+    .nav { display: flex; align-items: center; gap: 28px; }
+    .nav a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color .18s ease; }
+    .nav a:hover { color: var(--blue); }
+    .nav .nav-download { color: var(--blue); font-weight: 700; }
+
+    .hero {
+      min-height: 570px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(330px, .88fr);
+      align-items: center;
+      gap: 68px;
+      padding-block: 76px 82px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      right: -150px;
+      top: 28px;
+      width: 590px;
+      height: 470px;
+      border: 1px solid #d6e5fa;
+      background: repeating-linear-gradient(135deg, rgba(36,99,235,.035) 0 1px, transparent 1px 17px);
+      clip-path: polygon(18% 0, 100% 0, 100% 82%, 82% 100%, 0 100%, 0 18%);
+    }
+    .eyebrow { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    h1 { margin: 18px 0 20px; max-width: 680px; font-size: clamp(38px, 5vw, 62px); line-height: 1.18; letter-spacing: 0; }
+    .hero-copy > p { max-width: 580px; margin: 0; color: var(--muted); font-size: 18px; }
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 32px; }
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      background: var(--blue);
+      color: var(--white);
+      font-weight: 750;
+      text-decoration: none;
+      box-shadow: 0 7px 18px rgba(36,99,235,.16);
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--blue-dark); box-shadow: 0 10px 22px rgba(36,99,235,.22); }
+    .button-secondary { border-color: #c9d9ef; background: rgba(255,255,255,.76); color: var(--ink); box-shadow: none; }
+    .button-secondary:hover { border-color: #91b5ea; background: #fff; box-shadow: none; }
+    .hero-note { margin-top: 20px; color: #71839c; font-size: 13px; }
+
+    .product-mark { position: relative; display: grid; justify-items: center; padding: 26px 0; animation: settle-in .75s cubic-bezier(.2,.75,.25,1) both; }
+    .product-mark::before {
+      content: "";
+      position: absolute;
+      inset: 0 10px 0 0;
+      border: 1px solid #ccddf5;
+      border-radius: 18px 5px 18px 5px;
+      background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(229,240,255,.76));
+      transform: rotate(2deg);
+    }
+    .product-mark::after {
+      content: "WINDOWS TOOL  /  BUILD 01";
+      position: absolute;
+      right: -18px;
+      bottom: 42px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--white);
+      color: var(--muted);
+      font: 700 10px/1.2 var(--font);
+      letter-spacing: .06em;
+      transform: rotate(-3deg);
+    }
+    .product-content { position: relative; display: grid; justify-items: center; gap: 17px; padding: 24px; }
+    .product-icon { width: 142px; height: 142px; image-rendering: pixelated; filter: drop-shadow(0 14px 17px rgba(27,68,135,.16)); animation: icon-arrive .8s .12s cubic-bezier(.2,.8,.2,1) both; }
+    .product-label { color: #496482; font-size: 13px; font-weight: 700; }
+    .product-version { color: #91a1b5; font: 11px/1.2 var(--font); }
+
+    .section { padding-block: 82px; border-top: 1px solid var(--line); }
+    .section-head { max-width: 650px; margin-bottom: 38px; }
+    .section-kicker { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    h2 { margin: 10px 0 12px; font-size: 34px; line-height: 1.3; letter-spacing: 0; }
+    .section-head p { margin: 0; color: var(--muted); }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #b9cde7; border-bottom: 1px solid #b9cde7; }
+    .step { min-height: 210px; padding: 25px 26px 28px 0; }
+    .step + .step { padding-left: 26px; border-left: 1px solid #d5e2f2; }
+    .step-number { color: var(--blue); font: 800 13px/1.2 var(--font); }
+    .step h3 { margin: 22px 0 8px; font-size: 20px; }
+    .step p { max-width: 300px; margin: 0; color: var(--muted); font-size: 14px; }
+
+    .backup-band { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; padding: 30px 34px; border: 1px solid #cfe0f5; border-radius: 12px; background: #eaf3ff; }
+    .backup-band h3 { margin: 0 0 6px; font-size: 20px; }
+    .backup-band p { margin: 0; color: var(--muted); font-size: 14px; }
+    .folder-tag { padding: 10px 14px; border: 1px solid #c7d9f0; border-radius: 7px; background: #fff; color: #244b82; font: 700 13px/1.3 Consolas, monospace; white-space: nowrap; }
+
+    .author-section { padding-block: 82px 94px; border-top: 1px solid var(--line); }
+    .author { display: grid; grid-template-columns: 124px minmax(0, 1fr) auto; gap: 28px; align-items: center; padding: 30px 0; border-top: 1px solid #b9cde7; border-bottom: 1px solid #b9cde7; }
+    .avatar-link { width: 112px; height: 112px; display: block; overflow: hidden; border: 4px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #cbdcf2, 0 12px 26px rgba(27,68,135,.13); transition: transform .22s ease, box-shadow .22s ease; }
+    .avatar-link:hover { transform: translateY(-3px) scale(1.035); box-shadow: 0 0 0 1px #8db3e9, 0 16px 30px rgba(27,68,135,.19); }
+    .avatar-link img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .author-name { margin: 0 0 4px; font-size: 22px; }
+    .author-label { margin: 0 0 10px; color: var(--blue); font-size: 13px; font-weight: 750; }
+    .author-bio { max-width: 520px; margin: 0; color: var(--muted); font-size: 14px; }
+    .author-link { color: var(--blue); font-size: 14px; font-weight: 750; text-decoration: none; white-space: nowrap; }
+    .author-link:hover { color: var(--blue-dark); text-decoration: underline; text-underline-offset: 4px; }
+
+    footer { padding: 22px 0 30px; border-top: 1px solid var(--line); color: #71839c; font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 18px; }
+
+    .video-wrap { margin-top: 42px; }
+    .video-head { margin-bottom: 18px; }
+    .video-head h3 { margin: 0 0 6px; font-size: 20px; }
+    .video-head p { margin: 0; color: var(--muted); font-size: 14px; }
+    .video-box { position: relative; width: 100%; padding-top: 56.25%; border-radius: 14px; overflow: hidden; border: 1px solid #cfe0f5; background: #0e1b2f; box-shadow: 0 12px 30px rgba(27,68,135,.1); }
+    .video-box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0e1b2f; }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .hero-copy { animation: settle-in .65s .04s cubic-bezier(.2,.75,.25,1) both; }
+    .step:nth-child(2) { transition-delay: .08s; }
+    .step:nth-child(3) { transition-delay: .16s; }
+    @keyframes settle-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes icon-arrive { from { opacity: 0; transform: translateY(10px) scale(.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 34px, 560px); }
+      .topbar { height: 68px; }
+      .nav { gap: 14px; }
+      .nav a:not(.nav-download) { display: none; }
+      .nav .nav-download { font-size: 13px; }
+      .hero { min-height: 0; grid-template-columns: 1fr; gap: 20px; padding-block: 54px 58px; }
+      .hero::before { right: 0; top: 130px; width: 100%; height: 360px; }
+      .product-mark::after { right: 0; }
+      h1 { font-size: clamp(36px, 10vw, 50px); }
+      .hero-copy > p { font-size: 16px; }
+      .product-mark { width: min(100%, 420px); margin: 8px auto 0; }
+      .product-icon { width: 116px; height: 116px; }
+      .section, .author-section { padding-block: 60px; }
+      .steps { grid-template-columns: 1fr; }
+      .step { min-height: auto; padding: 22px 0; }
+      .step + .step { padding-left: 0; border-left: 0; border-top: 1px solid #d5e2f2; }
+      .step h3 { margin-top: 12px; }
+      .backup-band { grid-template-columns: 1fr; padding: 24px; }
+      .folder-tag { justify-self: start; }
+      .author { grid-template-columns: 82px minmax(0, 1fr); gap: 17px; }
+      .avatar-link { width: 78px; height: 78px; }
+      .author-link { grid-column: 2; }
+      .footer-row { flex-direction: column; gap: 4px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar shell">
+    <a class="brand" href="#top" aria-label="芙芙PCL下载补丁首页">
+      <img src="icon.ico" alt="">
+      <span>芙芙PCL下载补丁</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#guide">使用方法</a>
+      <a href="#backup">备份说明</a>
+      <a href="#author">作者</a>
+      <a class="nav-download" href="芙芙PCL下载修复.exe" download>下载程序 <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <span class="eyebrow">WINDOWS · PCL SUPPORT</span>
+        <h1>芙芙PCL<br>下载补丁</h1>
+        <p>为 PCL 启动器提供下载与整合包安装修复。选择启动器程序，检测后即可执行修复。</p>
+        <div class="hero-actions">
+          <a class="button" href="芙芙PCL下载修复.exe" download>下载 Windows 程序 <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="#guide">查看使用方法 <span aria-hidden="true">↘</span></a>
+        </div>
+        <p class="hero-note">开始前请完全退出 PCL，包括托盘中的后台进程。</p>
+      </div>
+      <div class="product-mark" aria-label="芙芙PCL下载补丁程序图标">
+        <div class="product-content">
+          <img class="product-icon" src="icon.ico" alt="芙芙PCL下载补丁图标">
+          <span class="product-label">PCL启动器下载补丁</span>
+          <span class="product-version">FUFU DOWNLOAD REPAIR</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guide">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-kicker">QUICK GUIDE</span>
+          <h2>三步完成修复</h2>
+          <p>修复对象是 PCL 启动器的 exe 文件。操作前先退出 PCL。</p>
+        </div>
+        <div class="steps">
+          <article class="step reveal">
+            <span class="step-number">01 / 选择程序</span>
+            <h3>定位 PCL 启动器</h3>
+            <p>打开软件，在“目标程序路径”中选择 PCL 启动器 exe，也可以点击“浏览文件”定位。</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-number">02 / 检测修复</span>
+            <h3>执行检测并修复</h3>
+            <p>点击“检测并修复”。程序会识别需要处理的项目，并在操作结束后显示结果与运行日志。</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-number">03 / 重新启动</span>
+            <h3>查看修复结果</h3>
+            <p>确认日志显示修复成功后，重新打开 PCL。若要回退，在软件中选择"从备份还原"。</p>
+          </article>
+        </div>
+
+        <div class="video-wrap reveal">
+          <div class="video-head">
+            <span class="section-kicker">VIDEO TUTORIAL</span>
+            <h3>视频教程</h3>
+            <p>如果文字说明看不太明白，可以观看下面的视频演示。</p>
+          </div>
+          <div class="video-box">
+            <video controls preload="metadata" poster="">
+              <source src="./10月24日.mp4" type="video/mp4">
+              您的浏览器不支持 HTML5 视频播放。
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="backup">
+      <div class="shell">
+        <div class="backup-band reveal">
+          <div>
+            <h3>每次修复前保留版本备份</h3>
+            <p>备份放在程序同目录的 FixBackup 文件夹，按 PCL 版本命名；重复版本不会再次添加。多个版本可在还原时选择。</p>
+          </div>
+          <span class="folder-tag">FixBackup / version.exe</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="author-section" id="author">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-kicker">ABOUT THE AUTHOR</span>
+          <h2>作者</h2>
+        </div>
+        <div class="author reveal">
+          <a class="avatar-link" href="https://space.bilibili.com/3546880694815395?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer" aria-label="打开枫庭听潮的哔哩哔哩个人空间">
+            <img src="芙芙.png" alt="芙芙头像">
+          </a>
+          <div>
+            <h3 class="author-name">枫庭听潮</h3>
+            <p class="author-label">PCL 下载补丁独立开发作者</p>
+            <p class="author-bio">我还是习惯被人叫做“芙芙”，是下载补丁的独立开发作者。</p>
+          </div>
+          <a class="author-link" href="https://space.bilibili.com/3546880694815395?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">访问哔哩哔哩个人空间 ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span>芙芙PCL下载补丁 · FufuDownloadRpair</span>
+      <span>Windows 桌面工具 · 使用前请退出 PCL</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (item) { item.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.14 });
+      items.forEach(function (item) { observer.observe(item); });
+    }());
+  </script>
+</body>
+</html>
